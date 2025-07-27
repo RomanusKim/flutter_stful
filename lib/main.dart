@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(App());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  int counter = 0;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
+        backgroundColor: Color(0x0fff4edb),
         body: Center(
-          child: Text('Hello World!'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Click Count', style: TextStyle(fontSize: 30)),
+              Text('$counter', style: TextStyle(fontSize: 30)),
+            ],
+          ),
         ),
       ),
     );
