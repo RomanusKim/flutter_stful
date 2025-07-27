@@ -12,6 +12,14 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  bool showTitle = true;
+
+  void toggleTitle() {
+    setState(() {
+      showTitle = !showTitle;
+    });
+  }
+
   List<int> numbers = [];
   void onClicked() {
     // 코드 가독성을 위해 setState 안에 넣는다.
@@ -25,23 +33,59 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: TextTheme(titleLarge: TextStyle(color: Colors.red)),
+      ),
       home: Scaffold(
         backgroundColor: Color(0xfff4eddb),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Click Count', style: TextStyle(fontSize: 30)),
-              // Text('$counter', style: TextStyle(fontSize: 30)),
-              for (var n in numbers) Text('$n'),
+              showTitle ? MyLargeTitle() : Text('nothing'),
               IconButton(
-                iconSize: 40,
-                onPressed: onClicked,
-                icon: Icon(Icons.add_box_rounded),
+                onPressed: toggleTitle,
+                icon: Icon(Icons.remove_red_eye),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MyLargeTitle extends StatefulWidget {
+  const MyLargeTitle({super.key});
+
+  @override
+  State<MyLargeTitle> createState() => _MyLargeTitleState();
+}
+
+class _MyLargeTitleState extends State<MyLargeTitle> {
+  @override
+  void initState() {
+    // API 업데이트 관련일 때
+    // 오직 단 한번만 호출
+    super.initState();
+    print('hello');
+  }
+
+  @override
+  void dispose() {
+    // 스크린이 사라질 때
+    super.dispose();
+    print('dispose!');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('build');
+    return Text(
+      'My Large Title',
+      style: TextStyle(
+        fontSize: 30,
+        color: Theme.of(context).textTheme.titleLarge!.color,
       ),
     );
   }
